@@ -4,7 +4,10 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        HPFrame frame = new HPFrame();
+        HPComponent component = DaggerHPComponent
+                .builder()
+                .build();
+        HPFrame frame = component.providesHPFrame();
         frame.setVisible(true);
     }
 }
