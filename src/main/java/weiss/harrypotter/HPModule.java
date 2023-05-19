@@ -35,18 +35,15 @@ public class HPModule {
         return new DefaultListModel<>();
 
     }
-    @Provides
-    @Named("spell")
-    @Singleton
-    public List<Spell> ProvidesSpell(){
-        return new ArrayList<>();
-    }
-    @Provides
+    /*@Provides
     @Named("label1")
     @Singleton
     public JLabel ProvidesLabel(){
         return new JLabel();
-    }
+        }
+
+     */
+
 }
 
 

@@ -15,66 +15,67 @@ public class HPController {
     private final DefaultListModel<String> listModel;
     HPService service;
     HPFrame frame;
-    private final List<Spell> spell;
-    private final JLabel label1;
+    private List<Spell> allInfo;
+    //private  JLabel label1;
+    String name;
+    String incantation;
+    String type;
+    String light;
+    String creator;
 
 
     @Inject
     public HPController(
             HPService service,
-            @Named("listModel") DefaultListModel<String> listModel,
-            @Named("spell") List<Spell> spell,
-            @Named("label1") JLabel label1
+            @Named("listModel") DefaultListModel<String> listModel
+            //@Named("label1") JLabel label1
     ) {
 
         this.service = service;
         this.listModel = listModel;
-        this.spell = spell;
-        this.label1 = label1;
+        //this.label1 = label1;
 
     }
 
 
-    public DefaultListModel<String> setList() {
+    public void requestSpells() {
 
         service.getSpells()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(
-                        Spells -> {
+                        spells -> {
                             SwingUtilities.invokeLater(() -> {
-                                this.setListModel(Spells);
-                                //this.setSpells(Spells);
-
+                                this.setSpells(spells);
+                                allInfo = spells;
                             });
                         }
                         ,
                         Throwable::printStackTrace
                 );
-        return this.getListModel();
     }
 
 
 
-    public void setListModel(List<Spell> spells) {
-        for (int i = 0; i < spells.size(); i++) {
-            this.listModel.addElement(spells.get(i).getName());
+    public void setSpells(List<Spell> spells) {
+        for (Spell spell : spells) {
+            this.listModel.addElement(spell.getName());
         }
 
-    }
-
-    public DefaultListModel<String> getListModel() {
-        return this.listModel;
     }
 
     public String getInfo(Object item) {
         for (int i = 0; i < listModel.getSize(); i++) {
             if (listModel.get(i).equals(item)) {
-                //String name = spell.get(i).getLight();
-                label1.setText(item.toString());
+                name = allInfo.get(i).getName();
+                incantation = allInfo.get(i).getIncantation();
+                type = allInfo.get(i).getType();
+                light = allInfo.get(i).getLight();
+                creator = allInfo.get(i).getCreator();
             }
         }
-        return null;
+        return "Name " + name + "     Incantation: " + incantation +
+                "    type: " + type + "     light: " + light + "    creator " + creator;
     }
 
 

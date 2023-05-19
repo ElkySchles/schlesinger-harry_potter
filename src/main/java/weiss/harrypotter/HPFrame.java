@@ -25,25 +25,21 @@ public class HPFrame extends JFrame {
     private final JList<String> list;
     HPController controller;
     private final JLabel label1;
-    JLabel[] labels;
-
-    private final List<Spell> spell;
-    HPService service;
+    JLabel[][] labels = new JLabel[5][2];
+    String[] names = new String[]{"Name", "Incantation", "type", "light", "creator"};
+    //HPService service;
 
     @Inject
     public HPFrame(HPController controller,
-                @Named("listModel") DefaultListModel<String> listModel,
-                   @Named("spell") List<Spell> spell,
+                @Named("listModel") DefaultListModel<String> listModel/*,
                    @Named("label1") JLabel label1
-
+                   */
     ) {
         this.controller = controller;
         this.listModel = listModel;
-        this.spell = spell;
-        this.label1 = label1;
+        //this.label1 = label1;
 
-
-
+        //Setting the main GUI
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         setContentPane(mainPanel);
@@ -51,62 +47,47 @@ public class HPFrame extends JFrame {
         setTitle("Spell Info");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //JPanel middlePanel = new JPanel();
-        //middlePanel.setLayout(new BorderLayout());
-        //label1 = new JLabel("Hello");
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(5,2));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(100,150,100,150));
+        mainPanel.add(centerPanel,BorderLayout.CENTER);
 
-
+        //Setting the area in which to display the text
         label1 = new JLabel();
-        listModel = controller.setList();
+        JLabel finalLabel1 = label1;
+        //mainPanel.add(label1, BorderLayout.CENTER);
+        for (int i = 0; i < labels.length; i++) {
+            for (int j = 0; j < labels[i].length; j++) {
+                labels[i][j] = new JLabel();
+                centerPanel.add(labels[i][j]);
+                labels[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
+            }
+        }
+
+
+
+        //Setting the list
+        controller.requestSpells();
         list = new JList<>(listModel);
         list.setBounds(10, 10, 200, 400);
         mainPanel.setSize(500,500);
         scrollPane = new JScrollPane(list);
         mainPanel.add(scrollPane, BorderLayout.WEST);
 
-        mainPanel.add(label1, SwingConstants.CENTER);
 
 
-        DefaultListModel<String> finalListModel = listModel;
+        //Calling the information when something on the list is clicked
         list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 JList target = (JList) e.getSource();
                 Object item = target.getModel().getElementAt(target.getSelectedIndex());
-                //for (int i = 0; i < finalListModel.getSize(); i++) {
-                    //if (finalListModel.get(i).equals(item)) {
-                        controller.getInfo(item);
-                    //}
-                //}
+                finalLabel1.setText(controller.getInfo(item));
                 requestFocus();
 
             }
         });
-        /*Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://wizard-world-api.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                .build();
-
-        HPService service = retrofit.create(HPService.class);
-
-        service.getSpells()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.newThread())
-                .subscribe(
-                        Spells -> {
-                            SwingUtilities.invokeLater(() -> {
-
-                                for (int i = 0; i < Spells.size(); i++) {
-                                    listModel.addElement(Spells.get(i).getName());
-                                }
-                            });
-                        }
-                        ,
-                        Throwable::printStackTrace
-
-                );*/
 
 
     }
