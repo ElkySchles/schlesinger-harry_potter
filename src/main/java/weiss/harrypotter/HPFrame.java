@@ -25,6 +25,7 @@ public class HPFrame extends JFrame {
     private final JList<String> list;
     HPController controller;
     private final JLabel label1;
+
     JLabel[][] labels = new JLabel[5][2];
     String[] names = new String[]{"Name", "Incantation", "type", "light", "creator"};
     //HPService service;
@@ -40,23 +41,39 @@ public class HPFrame extends JFrame {
         //this.label1 = label1;
 
         //Setting the main GUI
+
+
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         setContentPane(mainPanel);
         setSize(1200, 1000);
         setTitle("Spell Info");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        ImageIcon icon = new ImageIcon("src/main/java/weiss/harrypotter/HarryPotter.png");
+        JLabel thumb = new JLabel();
+        thumb.setIcon(icon);
 
-        JPanel centerPanel = new JPanel();
+
+        //mainPanel.add(thumb,BorderLayout.NORTH);
+        JPanel otherPanel = new JPanel();
+        otherPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        otherPanel.add(thumb);
+        mainPanel.add(otherPanel, BorderLayout.NORTH);
+
+
+
+
+        /*JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout(5,2));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(100,150,100,150));
-        mainPanel.add(centerPanel,BorderLayout.CENTER);
+        mainPanel.add(centerPanel,BorderLayout.CENTER);*/
 
         //Setting the area in which to display the text
         label1 = new JLabel();
         JLabel finalLabel1 = label1;
-        //mainPanel.add(label1, BorderLayout.CENTER);
-        for (int i = 0; i < labels.length; i++) {
+        mainPanel.add(label1, BorderLayout.CENTER);
+        /*for (int i = 0; i < labels.length; i++) {
             for (int j = 0; j < labels[i].length; j++) {
                 labels[i][j] = new JLabel();
                 centerPanel.add(labels[i][j]);
@@ -64,7 +81,7 @@ public class HPFrame extends JFrame {
             }
         }
 
-
+         */
 
         //Setting the list
         controller.requestSpells();

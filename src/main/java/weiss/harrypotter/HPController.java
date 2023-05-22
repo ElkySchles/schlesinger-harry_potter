@@ -74,8 +74,8 @@ public class HPController {
                 creator = allInfo.get(i).getCreator();
             }
         }
-        return "Name " + name + "     Incantation: " + incantation +
-                "    type: " + type + "     light: " + light + "    creator " + creator;
+        return "\n\t Name: " + name + "\t     Incantation: " + incantation +
+                "\t\t    Type: " + type + "\t     Light: " + light + "\t\t\t\t\t\t    Creator: " + creator;
     }
 
 
