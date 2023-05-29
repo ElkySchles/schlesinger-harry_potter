@@ -35,14 +35,7 @@ public class HPModule {
         return new DefaultListModel<>();
 
     }
-    /*@Provides
-    @Named("label1")
-    @Singleton
-    public JLabel ProvidesLabel(){
-        return new JLabel();
-        }
 
-     */
 
 }
 

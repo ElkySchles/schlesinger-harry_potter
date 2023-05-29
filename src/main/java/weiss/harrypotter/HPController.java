@@ -1,5 +1,6 @@
 package weiss.harrypotter;
 
+import hu.akarnokd.rxjava3.swing.SwingSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -14,9 +15,8 @@ public class HPController {
     //private final JList<Spell> list;
     private final DefaultListModel<String> listModel;
     HPService service;
-    HPFrame frame;
     private List<Spell> allInfo;
-    //private  JLabel label1;
+
     String name;
     String incantation;
     String type;
@@ -28,12 +28,10 @@ public class HPController {
     public HPController(
             HPService service,
             @Named("listModel") DefaultListModel<String> listModel
-            //@Named("label1") JLabel label1
     ) {
 
         this.service = service;
         this.listModel = listModel;
-        //this.label1 = label1;
 
     }
 
@@ -42,7 +40,7 @@ public class HPController {
 
         service.getSpells()
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.newThread())
+                .observeOn(SwingSchedulers.edt())
                 .subscribe(
                         spells -> {
                             SwingUtilities.invokeLater(() -> {
@@ -64,7 +62,7 @@ public class HPController {
 
     }
 
-    public String getInfo(Object item) {
+    public String getInfo(String item) {
         for (int i = 0; i < listModel.getSize(); i++) {
             if (listModel.get(i).equals(item)) {
                 name = allInfo.get(i).getName();
@@ -74,7 +72,7 @@ public class HPController {
                 creator = allInfo.get(i).getCreator();
             }
         }
-        return "\n\t Name: " + name + "\t     Incantation: " + incantation +
+        return "\n\t Name: " + name + "\t\t   Incantation: " + incantation +
                 "\t\t    Type: " + type + "\t     Light: " + light + "\t\t\t\t\t\t    Creator: " + creator;
     }
 

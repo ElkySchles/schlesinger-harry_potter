@@ -26,23 +26,17 @@ public class HPFrame extends JFrame {
     HPController controller;
     private final JLabel label1;
 
-    JLabel[][] labels = new JLabel[5][2];
-    String[] names = new String[]{"Name", "Incantation", "type", "light", "creator"};
-    //HPService service;
 
     @Inject
     public HPFrame(HPController controller,
-                @Named("listModel") DefaultListModel<String> listModel/*,
-                   @Named("label1") JLabel label1
-                   */
+                @Named("listModel") DefaultListModel<String> listModel
+
     ) {
         this.controller = controller;
         this.listModel = listModel;
-        //this.label1 = label1;
+
 
         //Setting the main GUI
-
-
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -54,34 +48,17 @@ public class HPFrame extends JFrame {
         JLabel thumb = new JLabel();
         thumb.setIcon(icon);
 
-
-        //mainPanel.add(thumb,BorderLayout.NORTH);
-        JPanel otherPanel = new JPanel();
-        otherPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        otherPanel.add(thumb);
-        mainPanel.add(otherPanel, BorderLayout.NORTH);
-
-
-
-
-        /*JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(5,2));
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(100,150,100,150));
-        mainPanel.add(centerPanel,BorderLayout.CENTER);*/
-
         //Setting the area in which to display the text
         label1 = new JLabel();
         JLabel finalLabel1 = label1;
-        mainPanel.add(label1, BorderLayout.CENTER);
-        /*for (int i = 0; i < labels.length; i++) {
-            for (int j = 0; j < labels[i].length; j++) {
-                labels[i][j] = new JLabel();
-                centerPanel.add(labels[i][j]);
-                labels[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
-            }
-        }
+        //mainPanel.add(label1, BorderLayout.CENTER);
 
-         */
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(0,1));
+        centerPanel.add(thumb);
+        centerPanel.add(label1);
+        mainPanel.add(centerPanel,BorderLayout.CENTER);
+
 
         //Setting the list
         controller.requestSpells();
@@ -100,7 +77,7 @@ public class HPFrame extends JFrame {
 
                 JList target = (JList) e.getSource();
                 Object item = target.getModel().getElementAt(target.getSelectedIndex());
-                finalLabel1.setText(controller.getInfo(item));
+                finalLabel1.setText(controller.getInfo(item.toString()));
                 requestFocus();
 
             }
