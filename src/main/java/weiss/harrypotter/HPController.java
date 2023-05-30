@@ -12,16 +12,10 @@ import javax.swing.*;
 import java.util.List;
 
 public class HPController {
-    //private final JList<Spell> list;
+
     private final DefaultListModel<String> listModel;
     HPService service;
     private List<Spell> allInfo;
-
-    String name;
-    String incantation;
-    String type;
-    String light;
-    String creator;
 
 
     @Inject
@@ -62,16 +56,14 @@ public class HPController {
 
     }
 
-    public String getInfo(String item) {
-        for (int i = 0; i < listModel.getSize(); i++) {
-            if (listModel.get(i).equals(item)) {
-                name = allInfo.get(i).getName();
-                incantation = allInfo.get(i).getIncantation();
-                type = allInfo.get(i).getType();
-                light = allInfo.get(i).getLight();
-                creator = allInfo.get(i).getCreator();
-            }
-        }
+    public String getInfo(int i) {
+
+                String name = allInfo.get(i).getName();
+                String incantation = allInfo.get(i).getIncantation();
+                String type = allInfo.get(i).getType();
+                String light = allInfo.get(i).getLight();
+                String creator = allInfo.get(i).getCreator();
+
         return "\n\t Name: " + name + "\t\t   Incantation: " + incantation +
                 "\t\t    Type: " + type + "\t     Light: " + light + "\t\t\t\t\t\t    Creator: " + creator;
     }

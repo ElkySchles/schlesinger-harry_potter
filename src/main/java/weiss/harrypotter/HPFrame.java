@@ -76,8 +76,7 @@ public class HPFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
 
                 JList target = (JList) e.getSource();
-                Object item = target.getModel().getElementAt(target.getSelectedIndex());
-                finalLabel1.setText(controller.getInfo(item.toString()));
+                finalLabel1.setText(controller.getInfo(target.getSelectedIndex()));
                 requestFocus();
 
             }
