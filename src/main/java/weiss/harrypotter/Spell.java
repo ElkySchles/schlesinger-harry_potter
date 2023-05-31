@@ -36,4 +36,23 @@ public class Spell {
     public String getCreator() {
         return creator;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setIncantation(String incantation){
+        this.incantation = incantation;
+    }
+    public void setType(String type){
+        this.type = type;
+    }
+    public void setLight(String light){
+        this.light = light;
+    }
+    public void setCreator(String creator){
+        this.creator = creator;
+    }
+
+
+
+
 }

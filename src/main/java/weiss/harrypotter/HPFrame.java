@@ -51,13 +51,12 @@ public class HPFrame extends JFrame {
         //Setting the area in which to display the text
         label1 = new JLabel();
         JLabel finalLabel1 = label1;
-        //mainPanel.add(label1, BorderLayout.CENTER);
-
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridLayout(0,1));
         centerPanel.add(thumb);
         centerPanel.add(label1);
         mainPanel.add(centerPanel,BorderLayout.CENTER);
+
 
 
         //Setting the list
